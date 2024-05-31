@@ -1,36 +1,43 @@
 import { context, getOctokit } from '@actions/github';
 import { GitHub } from '@actions/github/lib/utils';
-import type { StatusEvent } from '@octokit/webhooks-types';
 
 import * as core from '@actions/core';
 
+import { isStatusEvent } from './payload';
+
 type Octokit = InstanceType<typeof GitHub>;
 
-async function handleStatusEvent(
-  octokit: Octokit,
-  fromStatus: string,
-  toStatus: string
-) {
-  const statusPayload = context.payload as StatusEvent;
+class InvalidPayloadError extends Error {
+  constructor(private readonly payload: unknown) {
+    super();
+    this.name = 'InvalidPayloadError';
+  }
 
-  core.info('Status event:');
-  core.info(JSON.stringify(statusPayload, null, 2));
+  get message(): string {
+    return `Invalid payload: ${JSON.stringify(this.payload, null, 2)}`;
+  }
+}
+
+async function handleStatusEvent(octokit: Octokit, toStatus: string) {
+  if (!isStatusEvent(context.payload)) {
+    throw new InvalidPayloadError(context.payload);
+  }
+
+  core.debug('Dumping event payload:');
+  core.debug(JSON.stringify(context.payload, null, 2));
 
   const {
     state,
     target_url,
     description,
-    context: ctx,
-    commit,
-    repository
-  } = statusPayload;
+    commit: { sha },
+    repository,
+    context: fromStatus
+  } = context.payload;
 
-  if (ctx !== fromStatus) {
-    core.info(`Status is not ${fromStatus}, skipping.`);
-    return;
-  }
-
-  const { sha } = commit;
+  core.info(
+    `Copying status '${state} from '${fromStatus}' to '${toStatus}' for commit '${sha}'`
+  );
 
   return await octokit.rest.repos.createCommitStatus({
     owner: repository.owner.login,
@@ -52,14 +59,11 @@ export async function run(): Promise<void> {
     const token = core.getInput('github-token', { required: true });
     const octokit = getOctokit(token);
 
-    const fromStatus = core.getInput('from-status', { required: true });
     const toStatus = core.getInput('to-status', { required: true });
-
-    core.info(`Comparing checks from ${fromStatus} to ${toStatus}.`);
 
     switch (context.eventName) {
       case 'status':
-        await handleStatusEvent(octokit, fromStatus, toStatus);
+        await handleStatusEvent(octokit, toStatus);
         break;
       default:
         core.setFailed(`The event ${context.eventName} is not supported.`);
