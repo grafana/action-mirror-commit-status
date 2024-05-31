@@ -18,17 +18,22 @@
         "github.vscode-github-actions",
         "github.vscode-pull-request-github",
         "me-dutour-mathieu.vscode-github-actions",
+        "orta.vscode-jest",
         "redhat.vscode-yaml",
         "rvest.vs-code-prettier-eslint",
         "yzhang.markdown-all-in-one"
       ],
       "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.tabSize": 2,
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSaveMode": "file",
         "editor.formatOnSave": true,
-        "markdown.extension.list.indentationSize": "adaptive",
+        "editor.formatOnType": false,
+        "editor.tabSize": 2,
         "markdown.extension.italic.indicator": "_",
-        "markdown.extension.orderedList.marker": "one"
+        "markdown.extension.list.indentationSize": "adaptive",
+        "markdown.extension.orderedList.marker": "one",
+        "vs-code-prettier-eslint.prettierLast": false
       }
     }
   },

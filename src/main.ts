@@ -6,7 +6,7 @@ import * as core from '@actions/core';
 
 type Octokit = InstanceType<typeof GitHub>;
 
-async function handleStatusEvent(octokit: Octokit) {
+function handleStatusEvent(_octokit: Octokit) {
   const statusPayload = context.payload as StatusEvent;
 
   core.info('Status event:');
@@ -25,9 +25,11 @@ export async function run(): Promise<void> {
     const fromCheck = core.getInput('from-check', { required: true });
     const toCheck = core.getInput('to-check', { required: true });
 
+    core.info(`Comparing checks from ${fromCheck} to ${toCheck}.`);
+
     switch (context.eventName) {
       case 'status':
-        await handleStatusEvent(octokit);
+        handleStatusEvent(octokit);
         break;
       default:
         core.setFailed(`The event ${context.eventName} is not supported.`);
@@ -36,4 +38,6 @@ export async function run(): Promise<void> {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message);
   }
+
+  return Promise.resolve();
 }

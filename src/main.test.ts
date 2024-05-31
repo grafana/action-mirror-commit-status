@@ -4,14 +4,14 @@ import { mock, mockClear } from 'jest-mock-extended';
 
 import * as core from '@actions/core';
 
-import * as main from '../src/main';
+import * as main from './main';
 
 // Mock the GitHub Actions core library
 let getInputMock: jest.SpiedFunction<typeof core.getInput>;
 let setFailedMock: jest.SpiedFunction<typeof core.setFailed>;
 
-let payloadMock: StatusEvent = mock<StatusEvent>();
-let contextMock = mock<typeof context>({
+const payloadMock: StatusEvent = mock<StatusEvent>();
+const contextMock = mock<typeof context>({
   payload: payloadMock
 });
 
