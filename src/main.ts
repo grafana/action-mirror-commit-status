@@ -1,7 +1,8 @@
-import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { GitHub } from '@actions/github/lib/utils';
-import { StatusEvent } from '@octokit/webhooks-definitions/schema';
+import type { StatusEvent } from '@octokit/webhooks-types';
+
+import * as core from '@actions/core';
 
 type Octokit = InstanceType<typeof GitHub>;
 
