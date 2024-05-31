@@ -29225,7 +29225,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const github_1 = __nccwpck_require__(5438);
 const core = __importStar(__nccwpck_require__(2186));
-async function handleStatusEvent(octokit) {
+function handleStatusEvent(_octokit) {
     const statusPayload = github_1.context.payload;
     core.info('Status event:');
     core.info(JSON.stringify(statusPayload, null, 2));
@@ -29240,9 +29240,10 @@ async function run() {
         const octokit = (0, github_1.getOctokit)(token);
         const fromCheck = core.getInput('from-check', { required: true });
         const toCheck = core.getInput('to-check', { required: true });
+        core.info(`Comparing checks from ${fromCheck} to ${toCheck}.`);
         switch (github_1.context.eventName) {
             case 'status':
-                await handleStatusEvent(octokit);
+                handleStatusEvent(octokit);
                 break;
             default:
                 core.setFailed(`The event ${github_1.context.eventName} is not supported.`);
@@ -29253,6 +29254,7 @@ async function run() {
         if (error instanceof Error)
             core.setFailed(error.message);
     }
+    return Promise.resolve();
 }
 exports.run = run;
 
