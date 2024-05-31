@@ -13,12 +13,12 @@ inputs:
     default: ${{ github.token }}
     required: false
 
-  from-check:
-    description: 'The name of the check to mirror the status from'
+  from-status:
+    description: 'The name of the status to mirror from'
     required: true
 
-  to-check:
-    description: 'The name of the check to mirror the status to'
+  to-status:
+    description: 'The name of the status to mirror to'
     required: true
 
 runs:
