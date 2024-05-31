@@ -1,6 +1,7 @@
 {
   "name": "GitHub Actions (TypeScript)",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "containerUser": "node",
   "postCreateCommand": "npm install",
   "customizations": {
     "codespaces": {
