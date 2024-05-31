@@ -441,7 +441,6 @@ Object.defineProperty(exports, "toWin32Path", ({ enumerable: true, get: function
 Object.defineProperty(exports, "toPlatformPath", ({ enumerable: true, get: function () { return path_utils_1.toPlatformPath; } }));
 //# sourceMappingURL=core.js.map
 
-
 /***/ }),
 
 /***/ 717:
