@@ -1,7 +1,9 @@
 {
-  "name": "GitHub Actions (TypeScript)",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
-  "containerUser": "node",
+  "name": "action-mirror-commit-status",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
   "postCreateCommand": "npm install",
   "customizations": {
     "codespaces": {
@@ -36,6 +38,9 @@
         "vs-code-prettier-eslint.prettierLast": false
       }
     }
+  },
+  "containerEnv": {
+    "DEVCONTAINER": "true"
   },
   "remoteEnv": {
     "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"

@@ -24,3 +24,12 @@ updates:
         dependency-type: production
         update-types:
           - patch
+
+  - package-ecosystem: docker
+    directory: /.devcontainer
+    schedule:
+      interval: weekly
+    groups:
+      docker:
+        update-types:
+          - patch

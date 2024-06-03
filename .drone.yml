@@ -1,0 +1,22 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: build
+    image: alpine:latest
+    commands:
+      - echo "hello there"
+
+trigger:
+  branch:
+    - main
+    # Merge queues targetting the main branch
+    - gh-readonly-queue/main/**
+  event:
+    - push
+    - pull_request
+---
+kind: signature
+hmac: 15a64a0cd2e40d7c0a15f0470b2e8cb8cbcf302bff4caaa17805914993ed0dad
