@@ -1,0 +1,22 @@
+on:
+  status:
+
+run-name:
+  Mirror status ${{ github.event.context }} for ${{ github.ref }}
+  (${{github.event_name }})
+
+jobs:
+  commit-status:
+    if:
+      github.event.context == 'continuous-integration/drone/push' &&
+      startsWith(github.event.branches[0].name, 'gh-readonly-queue/main/')
+
+    permissions:
+      statuses: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror commit status
+        uses: ./
+        with:
+          to-status: continuous-integration/drone/pr
