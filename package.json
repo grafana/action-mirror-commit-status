@@ -75,7 +75,7 @@
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0-alpha.24",
+    "@typescript-eslint/eslint-plugin": "^8.0.0-alpha.25",
     "@typescript-eslint/parser": "^8.0.0-alpha.24",
     "@vercel/ncc": "^0.38.1",
     "eslint": "^9.4.0",
