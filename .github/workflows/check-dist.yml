@@ -9,6 +9,9 @@
 # expected from the build.
 name: Check Transpiled JavaScript
 
+run-name:
+  Check Transpiled JavaScript for ${{ github.ref }} (${{ github.event_name }})
+
 on:
   pull_request:
     branches:
@@ -16,6 +19,10 @@ on:
   push:
     branches:
       - main
+
+  merge_group:
+    types:
+      - checks_requested
 
 permissions:
   contents: read

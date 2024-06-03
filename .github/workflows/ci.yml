@@ -1,5 +1,8 @@
 name: Continuous Integration
 
+run-name:
+  Continuous Integration for ${{ github.ref }} (${{ github.event_name }})
+
 on:
   pull_request:
     branches:
@@ -7,6 +10,10 @@ on:
   push:
     branches:
       - main
+
+  merge_group:
+    types:
+      - checks_requested
 
 permissions:
   contents: read
